@@ -151,3 +151,7 @@ with tab3:
         reset_session()
         st.success("✅ تم مسح كل شيء")
         st.rerun()
+
+
+from utils.theme import render_footer
+render_footer()
