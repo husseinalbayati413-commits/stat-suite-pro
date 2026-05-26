@@ -16,7 +16,7 @@ from utils.session import init_session, reset_session, export_session, import_se
 from utils.pdf_report import build_pdf_report
 from utils.data_utils import summary_dict
 
-st.set_page_config(page_title="Report", page_icon="📄", layout="wide")
+st.set_page_config(page_title="Report", page_icon="icon.png", layout="wide")
 init_session()
 apply_theme()
 render_header()
