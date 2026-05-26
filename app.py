@@ -4,6 +4,7 @@ Main landing page for the Streamlit multipage app.
 """
 import streamlit as st
 from utils.session import init_session
+from utils.theme import render_footer
 
 st.set_page_config(
     page_title="Stat Suite Pro | منصة التحليل الإحصائي",
@@ -105,12 +106,4 @@ st.info(
 )
 
 st.markdown("---")
-st.markdown(
-    """
-    <div class="footer-card rtl-app">
-        <strong>Stat Suite Pro v2.0</strong><br/>
-        مبني باستخدام Pandas · SciPy · statsmodels · scikit-learn · Plotly · Streamlit
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
+render_footer()
