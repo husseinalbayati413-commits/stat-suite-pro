@@ -4,7 +4,7 @@ Privacy Policy Page
 import streamlit as st
 from utils.theme import apply_theme, render_header
 
-st.set_page_config(page_title="سياسة الخصوصية", page_icon="🛡️", layout="wide")
+st.set_page_config(page_title="سياسة الخصوصية", page_icon="icon.png", layout="wide")
 apply_theme()
 render_header()
 
