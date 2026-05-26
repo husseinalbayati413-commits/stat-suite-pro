@@ -26,3 +26,7 @@ else:
     col4.metric("Missing Values", int(df.isnull().sum().sum()))
 
     st.dataframe(df.head(10), use_container_width=True)
+
+
+from utils.theme import render_footer
+render_footer()
