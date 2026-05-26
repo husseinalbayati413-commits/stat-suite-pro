@@ -15,7 +15,7 @@ from utils.theme import apply_theme, render_header
 from utils.session import init_session, add_result
 from utils.data_utils import load_file, fill_missing
 
-st.set_page_config(page_title="Data Lab", page_icon="📂", layout="wide")
+st.set_page_config(page_title="Data Lab", page_icon="icon.png", layout="wide")
 init_session()
 apply_theme()
 render_header()
