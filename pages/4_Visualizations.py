@@ -115,3 +115,7 @@ with tab6:
         st.plotly_chart(fig, use_container_width=True)
     else:
         st.info("نحتاج 3 أعمدة رقمية على الأقل")
+
+
+from utils.theme import render_footer
+render_footer()
