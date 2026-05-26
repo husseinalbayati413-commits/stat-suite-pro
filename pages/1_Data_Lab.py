@@ -228,3 +228,7 @@ with tab4:
             file_name=f"cleaned_{st.session_state.filename or 'dataset'}.csv",
             mime="text/csv",
         )
+
+
+from utils.theme import render_footer
+render_footer()
