@@ -347,3 +347,7 @@ with tab5:
             })
         except Exception as e:
             st.error(f"خطأ: {e}")
+
+
+from utils.theme import render_footer
+render_footer()
