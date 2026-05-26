@@ -32,7 +32,7 @@ from utils.stats_utils import (
     polynomial_regression_analysis,
 )
 
-st.set_page_config(page_title="Advanced Statistics", page_icon="📈", layout="wide")
+st.set_page_config(page_title="Advanced Statistics", page_icon="icon.png", layout="wide")
 init_session()
 apply_theme()
 render_header()
