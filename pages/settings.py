@@ -23,3 +23,7 @@ with col2:
     st.toggle("Auto Save", value=True, disabled=True)
 
 st.success("✅ الواجهة المتجاوبة للهاتف مفعّلة، وأزرار التنزيل متاحة داخل الصفحات الرئيسية.")
+
+
+from utils.theme import render_footer
+render_footer()
