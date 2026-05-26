@@ -8,7 +8,7 @@ from utils.theme import render_footer
 
 st.set_page_config(
     page_title="Stat Suite Pro | منصة التحليل الإحصائي",
-    page_icon="📊",
+    page_icon="icon.png",
     layout="wide",
     initial_sidebar_state="expanded",
 )
