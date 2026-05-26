@@ -249,3 +249,17 @@ def render_header():
         """,
         unsafe_allow_html=True,
     )
+
+
+def render_footer():
+    """Render the common footer."""
+    st.markdown("---")
+    st.markdown(
+        '''
+        <div class="footer-card rtl-app" style="text-align: center;">
+            <strong>المطور: حسين حيدر</strong><br/>
+            Stat Suite Pro v2.0
+        </div>
+        ''',
+        unsafe_allow_html=True,
+    )
