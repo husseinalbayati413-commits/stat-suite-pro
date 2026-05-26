@@ -39,3 +39,7 @@ st.markdown("""
 - statsmodels / scikit-learn
 - Plotly / ReportLab
 """)
+
+
+from utils.theme import render_footer
+render_footer()
