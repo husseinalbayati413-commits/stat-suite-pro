@@ -19,7 +19,19 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.info("سيتم توفير رابط تحميل ملف الـ APK هنا قريباً بعد رفع التطبيق إلى المتجر أو توفير رابط مباشر.")
+apk_path = "StatSuitePro.apk"
+if os.path.exists(apk_path):
+    with open(apk_path, "rb") as file:
+        btn = st.download_button(
+            label="📲 تحميل التطبيق (APK)",
+            data=file,
+            file_name="StatSuitePro.apk",
+            mime="application/vnd.android.package-archive"
+        )
+    st.success("اضغط على الزر أعلاه لتنزيل التطبيق وتثبيته على هاتفك.")
+else:
+    st.info("لم يتم رفع ملف التطبيق (APK) حتى الآن. (للمطور: قم ببناء التطبيق باستخدام Android Studio وارفع ملف StatSuitePro.apk إلى المستودع).")
+
 
 from utils.theme import render_footer
 render_footer()
