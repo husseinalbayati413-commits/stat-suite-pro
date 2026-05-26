@@ -25,7 +25,7 @@ import plotly.graph_objects as go
 from utils.theme import apply_theme, render_header
 from utils.session import init_session, add_result
 
-st.set_page_config(page_title="Machine Learning", page_icon="🤖",
+st.set_page_config(page_title="Machine Learning", page_icon="icon.png",
                    layout="wide")
 init_session()
 apply_theme()
