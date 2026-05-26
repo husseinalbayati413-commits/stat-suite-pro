@@ -1,0 +1,14 @@
+[theme]
+base="light"
+primaryColor="#4f46e5"
+backgroundColor="#f8fbff"
+secondaryBackgroundColor="#eef2ff"
+textColor="#0f172a"
+font="sans serif"
+
+[server]
+maxUploadSize=200
+enableStaticServing=false
+
+[browser]
+gatherUsageStats=false
