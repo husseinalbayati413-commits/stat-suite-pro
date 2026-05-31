@@ -30,6 +30,8 @@ st.set_page_config(page_title="Machine Learning", page_icon="icon.png",
 init_session()
 apply_theme()
 render_header()
+from utils.auth import check_auth
+check_auth()
 
 st.markdown("## 🤖 Machine Learning — تعلم الآلة")
 
