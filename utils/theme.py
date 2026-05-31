@@ -232,6 +232,11 @@ def apply_theme():
                 padding-right: 0.75rem;
             }
         }
+
+        /* Hide Streamlit and GitHub elements */
+        #MainMenu {visibility: hidden;}
+        header {visibility: hidden;}
+        footer {visibility: hidden;}
         </style>
         """,
         unsafe_allow_html=True,
@@ -258,7 +263,8 @@ def render_footer():
         '''
         <div class="footer-card rtl-app" style="text-align: center;">
             <strong>المطور: حسين حيدر</strong><br/>
-            Stat Suite Pro v2.0
+            Stat Suite Pro v2.0<br/>
+            <a href="mailto:Husseinalbayati413@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 600; margin-top: 5px; display: inline-block;">📧 للتواصل والاستفسارات: Husseinalbayati413@gmail.com</a>
         </div>
         ''',
         unsafe_allow_html=True,
