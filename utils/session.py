@@ -23,6 +23,14 @@ def init_session():
     for k, v in defaults.items():
         if k not in st.session_state:
             st.session_state[k] = v
+            
+    if "session_notified" not in st.session_state:
+        st.session_state["session_notified"] = True
+        try:
+            from utils.telegram_logger import send_notification
+            send_notification("🔥 <b>مستخدم جديد</b> فتح التطبيق الآن!")
+        except Exception:
+            pass
 
 
 def add_result(category: str, title: str, content: dict):
