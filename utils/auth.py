@@ -10,14 +10,16 @@ def check_auth():
         st.markdown("## 🔒 تسجيل الدخول مطلوب")
         st.info("هذه الصفحة محمية. يرجى إدخال كلمة المرور للوصول إلى أدوات التحليل والإحصاء.")
         
-        pwd = st.text_input("كلمة المرور:", type="password", key="login_password")
-        if st.button("تسجيل الدخول", type="primary"):
-            # Strong password required by user
-            if pwd == "StatPro@2026!":
-                st.session_state.user_logged_in = True
-                st.success("تم تسجيل الدخول بنجاح! جاري تحويلك...")
-                time.sleep(1)
-                st.rerun()
-            else:
-                st.error("كلمة المرور غير صحيحة.")
+        with st.form("login_form"):
+            pwd = st.text_input("كلمة المرور:", type="password")
+            submitted = st.form_submit_button("تسجيل الدخول", type="primary")
+            
+            if submitted:
+                if pwd == "StatPro@2026!":
+                    st.session_state.user_logged_in = True
+                    st.success("تم تسجيل الدخول بنجاح! جاري تحويلك...")
+                    time.sleep(1)
+                    st.rerun()
+                else:
+                    st.error("كلمة المرور غير صحيحة.")
         st.stop()
