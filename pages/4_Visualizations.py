@@ -16,6 +16,8 @@ st.set_page_config(page_title="Visualizations", page_icon="icon.png", layout="wi
 init_session()
 apply_theme()
 render_header()
+from utils.auth import check_auth
+check_auth()
 
 st.markdown("## 📊 Interactive Visualizations — الرسوم التفاعلية")
 
