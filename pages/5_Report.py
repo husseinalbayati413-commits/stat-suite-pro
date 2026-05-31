@@ -20,6 +20,8 @@ st.set_page_config(page_title="Report", page_icon="icon.png", layout="wide")
 init_session()
 apply_theme()
 render_header()
+from utils.auth import check_auth
+check_auth()
 
 st.markdown("## 📄 Report & Downloads — التقارير والتنزيل")
 
