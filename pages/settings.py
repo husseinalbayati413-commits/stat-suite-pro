@@ -13,6 +13,8 @@ st.set_page_config(page_title="الإعدادات", page_icon="icon.png", layout
 init_session()
 apply_theme()
 render_header()
+from utils.auth import check_auth
+check_auth()
 
 st.markdown("## ⚙️ الإعدادات الشاملة (Settings)")
 st.info("قم بتخصيص تفضيلات التطبيق. يتم حفظ الإعدادات تلقائياً في جلستك الحالية.")
