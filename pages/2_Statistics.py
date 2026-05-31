@@ -36,6 +36,8 @@ st.set_page_config(page_title="Advanced Statistics", page_icon="icon.png", layou
 init_session()
 apply_theme()
 render_header()
+from utils.auth import check_auth
+check_auth()
 
 st.markdown("## 📈 Statistics & Regression Center — مركز الإحصاء والانحدار")
 st.caption("إحصاء وصفي، اختبارات فرضيات، ارتباط، قيم شاذة، وانحدار تشخيصي متقدم")
