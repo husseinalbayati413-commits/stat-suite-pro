@@ -130,10 +130,10 @@ with main_tabs[1]:
                     st.success(interpret_p_value(result.get("p_value", 1.0), "اختبار التوزيع الطبيعي"))
                     
                     hist = px.histogram(df, x=normality_col, marginal="box", nbins=30, template="plotly_white")
-                st.plotly_chart(hist, use_container_width=True)
-                add_result("Statistics", "Normality Test", {"column": normality_col, **result})
-            except Exception as e:
-                st.error(f"خطأ: {e}")
+                    st.plotly_chart(hist, use_container_width=True)
+                    add_result("Statistics", "Normality Test", {"column": normality_col, **result})
+                except Exception as e:
+                    st.error(f"خطأ: {e}")
 
     with col2:
         ci_col = st.selectbox("عمود فترة الثقة", num_cols, key="ci_col")
@@ -178,10 +178,10 @@ with main_tabs[2]:
                     st.success(interpret_correlation(result.get("correlation", 0), result.get("p_value", 1), x, y))
                     
                     fig = px.scatter(df, x=x, y=y, trendline="ols", template="plotly_white")
-                st.plotly_chart(fig, use_container_width=True)
-                add_result("Statistics", "Correlation", {"x": x, "y": y, **result})
-            except Exception as e:
-                st.error(f"خطأ: {e}")
+                    st.plotly_chart(fig, use_container_width=True)
+                    add_result("Statistics", "Correlation", {"x": x, "y": y, **result})
+                except Exception as e:
+                    st.error(f"خطأ: {e}")
 
 with main_tabs[3]:
     st.subheader("اختبارات الفرضيات")
@@ -208,10 +208,10 @@ with main_tabs[3]:
                             st.success(interpret_p_value(res.get("p_value", 1.0), "اختبار T-Test للمجموعات المستقلة"))
                             
                             fig = px.box(df[df[group_col].astype(str).isin([g1, g2])], x=group_col, y=value_col, color=group_col, template="plotly_white")
-                        st.plotly_chart(fig, use_container_width=True)
-                        add_result("Hypothesis Test", "Independent T-Test", {"value_col": value_col, "group_col": group_col, **res})
-                    except Exception as e:
-                        st.error(f"خطأ: {e}")
+                            st.plotly_chart(fig, use_container_width=True)
+                            add_result("Hypothesis Test", "Independent T-Test", {"value_col": value_col, "group_col": group_col, **res})
+                        except Exception as e:
+                            st.error(f"خطأ: {e}")
             else:
                 st.warning("يجب أن يحتوي العمود الفئوي على مجموعتين على الأقل.")
 
@@ -333,65 +333,65 @@ with main_tabs[5]:
                             st.success(interpret_regression(result['r2_test'], result['rmse_test']))
                             
                             c1, c2, c3, c4 = st.columns(4)
-                        c1.metric("R² Test", f"{result['r2_test']:.4f}")
-                        c2.metric("Adjusted R²", f"{result['r2_adjusted']:.4f}")
-                        c3.metric("RMSE", f"{result['rmse_test']:.4f}")
-                        c4.metric("MAE", f"{result['mae_test']:.4f}")
-
-                        st.markdown("### معاملات النموذج واختبار الدلالة")
-                        st.dataframe(result["coefficients"].round(6), use_container_width=True)
-
-                        if not result["vif"].empty:
-                            st.markdown("### VIF — فحص التعدد الخطي")
-                            st.dataframe(result["vif"].round(4), use_container_width=True)
-
-                        pred_fig = px.scatter(
-                            result["pred_actual"],
-                            x="actual",
-                            y="predicted",
-                            trendline="ols",
-                            template="plotly_white",
-                            title="Actual vs Predicted",
-                        )
-                        min_val = result["pred_actual"]["actual"].min()
-                        max_val = result["pred_actual"]["actual"].max()
-                        pred_fig.add_trace(go.Scatter(x=[min_val, max_val], y=[min_val, max_val], mode="lines", name="Ideal", line=dict(color="red", dash="dash")))
-                        st.plotly_chart(pred_fig, use_container_width=True)
-
-                        resid_fig = px.scatter(
-                            result["residuals"],
-                            x="fitted",
-                            y="residual",
-                            template="plotly_white",
-                            title="Residuals vs Fitted",
-                        )
-                        resid_fig.add_hline(y=0, line_dash="dash", line_color="red")
-                        st.plotly_chart(resid_fig, use_container_width=True)
-
-                        st.markdown("### ملخص OLS الكامل")
-                        st.code(result["summary_text"], language="text")
-
-                        export_json = {
-                            "features": features,
-                            "target": target,
-                            "n": result["n"],
-                            "r2_test": result["r2_test"],
-                            "r2_adjusted": result["r2_adjusted"],
-                            "rmse_test": result["rmse_test"],
-                            "mae_test": result["mae_test"],
-                            "f_statistic": result["f_statistic"],
-                            "f_p_value": result["f_p_value"],
-                        }
-                        st.download_button(
-                            "⬇️ تنزيل ملخص الانحدار JSON",
-                            json.dumps(export_json, ensure_ascii=False, indent=2),
-                            file_name="linear_regression_summary.json",
-                            mime="application/json",
-                        )
-
-                        add_result("Regression", "Multiple Linear Regression", export_json)
-                    except Exception as e:
-                        st.error(f"خطأ: {e}")
+                            c1.metric("R² Test", f"{result['r2_test']:.4f}")
+                            c2.metric("Adjusted R²", f"{result['r2_adjusted']:.4f}")
+                            c3.metric("RMSE", f"{result['rmse_test']:.4f}")
+                            c4.metric("MAE", f"{result['mae_test']:.4f}")
+    
+                            st.markdown("### معاملات النموذج واختبار الدلالة")
+                            st.dataframe(result["coefficients"].round(6), use_container_width=True)
+    
+                            if not result["vif"].empty:
+                                st.markdown("### VIF — فحص التعدد الخطي")
+                                st.dataframe(result["vif"].round(4), use_container_width=True)
+    
+                            pred_fig = px.scatter(
+                                result["pred_actual"],
+                                x="actual",
+                                y="predicted",
+                                trendline="ols",
+                                template="plotly_white",
+                                title="Actual vs Predicted",
+                            )
+                            min_val = result["pred_actual"]["actual"].min()
+                            max_val = result["pred_actual"]["actual"].max()
+                            pred_fig.add_trace(go.Scatter(x=[min_val, max_val], y=[min_val, max_val], mode="lines", name="Ideal", line=dict(color="red", dash="dash")))
+                            st.plotly_chart(pred_fig, use_container_width=True)
+    
+                            resid_fig = px.scatter(
+                                result["residuals"],
+                                x="fitted",
+                                y="residual",
+                                template="plotly_white",
+                                title="Residuals vs Fitted",
+                            )
+                            resid_fig.add_hline(y=0, line_dash="dash", line_color="red")
+                            st.plotly_chart(resid_fig, use_container_width=True)
+    
+                            st.markdown("### ملخص OLS الكامل")
+                            st.code(result["summary_text"], language="text")
+    
+                            export_json = {
+                                "features": features,
+                                "target": target,
+                                "n": result["n"],
+                                "r2_test": result["r2_test"],
+                                "r2_adjusted": result["r2_adjusted"],
+                                "rmse_test": result["rmse_test"],
+                                "mae_test": result["mae_test"],
+                                "f_statistic": result["f_statistic"],
+                                "f_p_value": result["f_p_value"],
+                            }
+                            st.download_button(
+                                "⬇️ تنزيل ملخص الانحدار JSON",
+                                json.dumps(export_json, ensure_ascii=False, indent=2),
+                                file_name="linear_regression_summary.json",
+                                mime="application/json",
+                            )
+    
+                            add_result("Regression", "Multiple Linear Regression", export_json)
+                        except Exception as e:
+                            st.error(f"خطأ: {e}")
 
     with reg_tabs[1]:
         x_poly = st.selectbox("المتغير المستقل", num_cols, key="poly_x")
