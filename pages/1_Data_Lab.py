@@ -75,19 +75,22 @@ with tab1:
     col1, col2 = st.columns([2, 1])
 
     with col1:
-        uploaded = st.file_uploader("اختر ملف CSV أو Excel", type=["csv", "xls", "xlsx"])
+        st.info("اسحب وأفلت الملف هنا (Drag & Drop)")
+        uploaded = st.file_uploader("اختر ملف CSV أو Excel أو JSON", type=["csv", "xls", "xlsx", "json"])
         if uploaded:
-            try:
-                df = load_file(uploaded)
-                save_df_to_session(df, uploaded.name)
-                st.success(f"✅ تم تحميل {uploaded.name} بنجاح — {df.shape[0]} صف × {df.shape[1]} عمود")
-                add_result("Data Lab", "Upload Dataset", {
-                    "filename": uploaded.name,
-                    "rows": int(df.shape[0]),
-                    "columns": int(df.shape[1]),
-                })
-            except Exception as e:
-                st.error(f"خطأ في قراءة الملف: {e}")
+            with st.spinner("جاري قراءة وتحليل البيانات..."):
+                import time; time.sleep(0.5)
+                try:
+                    df = load_file(uploaded)
+                    save_df_to_session(df, uploaded.name)
+                    st.success(f"✅ تم تحميل {uploaded.name} بنجاح — {df.shape[0]} صف × {df.shape[1]} عمود")
+                    add_result("Data Lab", "Upload Dataset", {
+                        "filename": uploaded.name,
+                        "rows": int(df.shape[0]),
+                        "columns": int(df.shape[1]),
+                    })
+                except Exception as e:
+                    st.error("❌ عذراً، يبدو أن هناك مشكلة في تنسيق الملف. يرجى التأكد من احتوائه على بيانات صالحة.")
 
     with col2:
         st.markdown("### بيانات تجريبية")
@@ -126,7 +129,28 @@ with tab3:
         st.info("⚠️ حمّل ملفاً أولاً")
     else:
         df = st.session_state.df.copy()
-        st.subheader("تنظيف البيانات")
+        st.markdown(
+            """
+            <div class="feature-card rtl-app" style="margin-bottom: 1rem;">
+                <h3>✨ التنظيف الذكي (Auto Clean)</h3>
+                <p>دع النظام يتعرف على المشاكل (القيم المفقودة، التكرارات) ويعالجها تلقائياً.</p>
+            </div>
+            """, unsafe_allow_html=True
+        )
+        if st.button("🚀 تنفيذ التنظيف الذكي", type="primary", use_container_width=True):
+            with st.spinner("يقوم الذكاء الاصطناعي بفحص وتصحيح البيانات..."):
+                import time; time.sleep(1)
+                before_missing = int(df.isnull().sum().sum())
+                cleaned = fill_missing(df, "mean")
+                before_rows = len(cleaned)
+                cleaned = cleaned.drop_duplicates()
+                removed_dups = before_rows - len(cleaned)
+                st.session_state.df = cleaned
+                st.success(f"✅ اكتمل التنظيف! (تم معالجة {before_missing} قيمة مفقودة، وحذف {removed_dups} صف مكرر)")
+                st.rerun()
+
+        st.markdown("---")
+        st.subheader("التنظيف اليدوي المتقدم")
 
         left, right = st.columns(2)
         with left:
@@ -140,7 +164,7 @@ with tab3:
                     "drop": "حذف الصفوف الناقصة",
                 }[x],
             )
-            if st.button("تطبيق معالجة القيم المفقودة"):
+            if st.button("🛠️ تطبيق معالجة القيم المفقودة"):
                 before = int(df.isnull().sum().sum())
                 cleaned = fill_missing(df, strategy)
                 st.session_state.df = cleaned
