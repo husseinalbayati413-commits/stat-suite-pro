@@ -11,7 +11,7 @@ def check_auth():
         st.info("هذه الصفحة محمية. يرجى إدخال كلمة المرور للوصول إلى أدوات التحليل والإحصاء.")
         
         with st.form("login_form"):
-            pwd = st.text_input("كلمة المرور:", type="password")
+            pwd = st.text_input("كلمة المرور (للمحترفين):", type="password")
             submitted = st.form_submit_button("تسجيل الدخول", type="primary")
             
             if submitted:
@@ -22,4 +22,13 @@ def check_auth():
                     st.rerun()
                 else:
                     st.error("كلمة المرور غير صحيحة.")
+        
+        st.markdown("---")
+        st.markdown("### أو")
+        if st.button("متابعة كزائر (Demo Mode)", use_container_width=True):
+            st.session_state.user_logged_in = True
+            st.success("تم الدخول بوضع الزائر! جاري تحويلك...")
+            time.sleep(1)
+            st.rerun()
+            
         st.stop()
