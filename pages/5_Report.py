@@ -76,16 +76,25 @@ with tab1:
             )
 
 with tab2:
-    st.subheader("توليد تقرير PDF احترافي")
-    project_name = st.text_input("اسم المشروع", value=st.session_state.project_name)
+    st.markdown(
+        """
+        <div class="hero-card rtl-app" style="text-align: center; margin-bottom: 1.5rem;">
+            <h2>🎉 Your Report is Ready! (تقريرك جاهز)</h2>
+            <p>تم تجميع جميع الإحصائيات، الاختبارات، والنماذج التي قمت بتشغيلها في الجلسة. يمكنك الآن تصديرها كتقرير أكاديمي منظم بصيغة PDF.</p>
+        </div>
+        """, unsafe_allow_html=True
+    )
+    
+    project_name = st.text_input("اسم المشروع أو البحث:", value=st.session_state.project_name)
     st.session_state.project_name = project_name
 
     a, b, c = st.columns(3)
     a.metric("الملف الحالي", st.session_state.filename or "—")
-    b.metric("عدد النتائج", len(st.session_state.results_log))
-    c.metric("نماذج ML", len(st.session_state.ml_models))
+    b.metric("عدد النتائج المسجلة", len(st.session_state.results_log))
+    c.metric("نماذج الذكاء الاصطناعي", len(st.session_state.ml_models))
 
-    if st.button("📄 إنشاء التقرير", type="primary"):
+    st.markdown("<br>", unsafe_allow_html=True)
+    if st.button("📄 توليد التقرير الأكاديمي (Generate Report)", type="primary", use_container_width=True):
         if st.session_state.df is None:
             st.error("⚠️ لا توجد بيانات محملة")
         else:
