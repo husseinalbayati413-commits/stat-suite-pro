@@ -31,6 +31,7 @@ from utils.stats_utils import (
     regression_analysis,
     polynomial_regression_analysis,
 )
+from utils.ai_insights import interpret_p_value, interpret_correlation, interpret_regression
 
 st.set_page_config(page_title="Advanced Statistics", page_icon="icon.png", layout="wide")
 init_session()
@@ -119,11 +120,16 @@ with main_tabs[1]:
 
     with col1:
         normality_col = st.selectbox("عمود فحص الطبيعية", num_cols)
-        if st.button("تشغيل اختبار الطبيعية"):
-            try:
-                result = normality_test(df[normality_col])
-                st.json(result)
-                hist = px.histogram(df, x=normality_col, marginal="box", nbins=30, template="plotly_white")
+        if st.button("🧠 تحليل وتوليد رؤى الطبيعية (Generate Insights)"):
+            with st.spinner("الذكاء الاصطناعي يقوم بالفحص..."):
+                import time; time.sleep(0.5)
+                try:
+                    result = normality_test(df[normality_col])
+                    st.json(result)
+                    
+                    st.success(interpret_p_value(result.get("p_value", 1.0), "اختبار التوزيع الطبيعي"))
+                    
+                    hist = px.histogram(df, x=normality_col, marginal="box", nbins=30, template="plotly_white")
                 st.plotly_chart(hist, use_container_width=True)
                 add_result("Statistics", "Normality Test", {"column": normality_col, **result})
             except Exception as e:
@@ -162,11 +168,16 @@ with main_tabs[2]:
         x = st.selectbox("X", num_cols, key="corr_x")
         y = st.selectbox("Y", num_cols, key="corr_y", index=1 if len(num_cols) > 1 else 0)
         method_pair = st.selectbox("طريقة التحليل", ["pearson", "spearman", "kendall"], key="corr_method")
-        if st.button("تحليل العلاقة"):
-            try:
-                result = pairwise_correlation(df, x, y, method_pair)
-                st.json(result)
-                fig = px.scatter(df, x=x, y=y, trendline="ols", template="plotly_white")
+        if st.button("🧠 تحليل العلاقة (Generate Correlation Insights)"):
+            with st.spinner("مساعدك البحثي يحلل العلاقات..."):
+                import time; time.sleep(0.5)
+                try:
+                    result = pairwise_correlation(df, x, y, method_pair)
+                    st.json(result)
+                    
+                    st.success(interpret_correlation(result.get("correlation", 0), result.get("p_value", 1), x, y))
+                    
+                    fig = px.scatter(df, x=x, y=y, trendline="ols", template="plotly_white")
                 st.plotly_chart(fig, use_container_width=True)
                 add_result("Statistics", "Correlation", {"x": x, "y": y, **result})
             except Exception as e:
@@ -187,11 +198,16 @@ with main_tabs[3]:
                 g1 = st.selectbox("المجموعة الأولى", groups, key="g1")
                 g2 = st.selectbox("المجموعة الثانية", groups, index=1, key="g2")
                 equal_var = st.checkbox("افتراض تساوي التباين", value=False)
-                if st.button("تشغيل Independent T-Test"):
-                    try:
-                        res = independent_t_test(df, value_col, group_col, g1, g2, equal_var)
-                        st.json(res)
-                        fig = px.box(df[df[group_col].astype(str).isin([g1, g2])], x=group_col, y=value_col, color=group_col, template="plotly_white")
+                if st.button("🧠 تحليل التباين (Generate Insights)"):
+                    with st.spinner("جاري مقارنة المجموعات..."):
+                        import time; time.sleep(0.5)
+                        try:
+                            res = independent_t_test(df, value_col, group_col, g1, g2, equal_var)
+                            st.json(res)
+                            
+                            st.success(interpret_p_value(res.get("p_value", 1.0), "اختبار T-Test للمجموعات المستقلة"))
+                            
+                            fig = px.box(df[df[group_col].astype(str).isin([g1, g2])], x=group_col, y=value_col, color=group_col, template="plotly_white")
                         st.plotly_chart(fig, use_container_width=True)
                         add_result("Hypothesis Test", "Independent T-Test", {"value_col": value_col, "group_col": group_col, **res})
                     except Exception as e:
@@ -303,15 +319,20 @@ with main_tabs[5]:
             )
             test_size = st.slider("نسبة الاختبار", 0.1, 0.4, 0.2, 0.05, key="reg_test_size")
 
-            if st.button("تشغيل الانحدار الخطي"):
-                if not features:
-                    st.warning("اختر متغيراً مستقلاً واحداً على الأقل")
-                elif target in features:
-                    st.warning("المتغير التابع يجب ألا يكون ضمن X")
-                else:
-                    try:
-                        result = regression_analysis(df, features, target, test_size)
-                        c1, c2, c3, c4 = st.columns(4)
+            if st.button("🧠 بناء النموذج الخطي (Build Model & Insights)"):
+                with st.spinner("يبني الذكاء الاصطناعي نموذج الانحدار..."):
+                    import time; time.sleep(0.7)
+                    if not features:
+                        st.warning("اختر متغيراً مستقلاً واحداً على الأقل")
+                    elif target in features:
+                        st.warning("المتغير التابع يجب ألا يكون ضمن X")
+                    else:
+                        try:
+                            result = regression_analysis(df, features, target, test_size)
+                            
+                            st.success(interpret_regression(result['r2_test'], result['rmse_test']))
+                            
+                            c1, c2, c3, c4 = st.columns(4)
                         c1.metric("R² Test", f"{result['r2_test']:.4f}")
                         c2.metric("Adjusted R²", f"{result['r2_adjusted']:.4f}")
                         c3.metric("RMSE", f"{result['rmse_test']:.4f}")
