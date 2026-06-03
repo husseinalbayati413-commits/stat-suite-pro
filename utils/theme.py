@@ -248,8 +248,8 @@ def render_header():
     st.markdown(
         """
         <div class="app-header rtl-app">
-            <h1>📊 Stat Suite Pro — منصة التحليل الإحصائي والانحدار</h1>
-            <p>تحليل البيانات · الاختبارات الإحصائية · الانحدار · التعلم الآلي · التقارير</p>
+            <h1 style="font-size: 1.8rem; margin-bottom: 5px;">🤖 Stat Suite Pro — AI Statistical & Research Assistant</h1>
+            <p style="font-size: 1.05rem; opacity: 0.95;">مساعدك الذكي لتحليل البيانات، اكتشاف الرؤى الإحصائية، وتوليد التقارير الأكاديمية بضغطة زر</p>
         </div>
         """,
         unsafe_allow_html=True,
