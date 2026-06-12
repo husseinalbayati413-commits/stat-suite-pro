@@ -237,6 +237,7 @@ def apply_theme():
         #MainMenu {visibility: hidden;}
         header {visibility: hidden;}
         footer {visibility: hidden;}
+        [data-testid="stSidebarNav"] {display: none;}
         </style>
         """,
         unsafe_allow_html=True,
@@ -255,6 +256,37 @@ def render_header():
         unsafe_allow_html=True,
     )
 
+
+def render_sidebar():
+    """Render a custom professional dashboard sidebar navigation."""
+    st.sidebar.markdown("<h2 style='text-align: center; color: white;'>📊 Stat Suite Pro</h2>", unsafe_allow_html=True)
+    st.sidebar.markdown("<hr style='border-color: rgba(255,255,255,0.1);'>", unsafe_allow_html=True)
+    
+    st.sidebar.page_link("app.py", label="🏠 Home", icon="🏠")
+    st.sidebar.page_link("pages/1_Data_Lab.py", label="🔬 Data Lab", icon="🔬")
+    st.sidebar.page_link("pages/2_Statistics.py", label="📈 Statistics & AI", icon="📈")
+    st.sidebar.page_link("pages/3_Machine_Learning.py", label="🤖 Machine Learning", icon="🤖")
+    st.sidebar.page_link("pages/4_Visualizations.py", label="📊 Visualizations", icon="📊")
+    st.sidebar.page_link("pages/5_Report.py", label="📄 Reports & Export", icon="📄")
+    
+    st.sidebar.markdown("<hr style='border-color: rgba(255,255,255,0.1);'>", unsafe_allow_html=True)
+    
+    if st.session_state.get("user_email"):
+        st.sidebar.success(f"👤 {st.session_state.user_email}")
+        if st.sidebar.button("Logout"):
+            from utils.db import init_supabase
+            supabase = init_supabase()
+            if supabase:
+                supabase.auth.sign_out()
+            st.session_state.user_logged_in = False
+            st.session_state.user_email = None
+            st.session_state.guest_mode = False
+            st.rerun()
+    elif st.session_state.get("guest_mode"):
+        st.sidebar.warning("👤 Guest Mode")
+        if st.sidebar.button("Sign In / Sign Up"):
+            st.session_state.guest_mode = False
+            st.rerun()
 
 def render_footer():
     """Render the common footer."""
