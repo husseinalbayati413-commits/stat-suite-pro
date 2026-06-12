@@ -41,6 +41,19 @@ def add_result(category: str, title: str, content: dict):
         "content": content,
         "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
     })
+    
+    # Cloud Save to Supabase
+    if st.session_state.get("user_logged_in") and st.session_state.get("user_email"):
+        try:
+            from utils.db import save_analysis
+            save_analysis(
+                user_id=st.session_state.user_email,
+                project_name=st.session_state.get("project_name", "Untitled"),
+                analysis_type=title,
+                result_data=content
+            )
+        except Exception as e:
+            print(f"Failed to save to cloud: {e}")
 
 
 def add_figure(name: str, fig):
